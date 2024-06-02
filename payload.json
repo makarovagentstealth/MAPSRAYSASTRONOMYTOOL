@@ -1,0 +1,44 @@
+{
+  "name": "Exoplaneta Via Láctea",
+  "description": "Configuração para mapear raios gama e radiofrequência em um exoplaneta na Via Láctea.",
+  "tasks": [
+    {
+      "type": "observation",
+      "name": "Observação de raios gama",
+      "instrument": "Telescópio de raios gama",
+      "target": "Exoplaneta Via Láctea",
+      "parameters": {
+        "energia": "100 keV - 10 MeV",
+        "resolução temporal": "1 ms",
+        "resolução espacial": "1 arcmin"
+      }
+    },
+    {
+      "type": "observation",
+      "name": "Observação de radiofrequência",
+      "instrument": "Radiotelescópio",
+      "target": "Exoplaneta Via Láctea",
+      "parameters": {
+        "frequência": "1 GHz - 10 GHz",
+        "resolução temporal": "1 s",
+        "resolução espacial": "1 arcsec"
+      }
+    },
+    {
+      "type": "processing",
+      "name": "Mapeamento de raios gama",
+      "input": "Observação de raios gama",
+      "output": "Mapa de raios gama",
+      "language": "Perl",
+      "code": "use strict; use warnings; use Astro::GammaRays; my $input = 'Observação_de_raios_gama'; my $output = 'Mapa_de_raios_gama'; my $gamma_rays = Astro::GammaRays->new(\$input); my $map = $gamma_rays->map(); save(\$map, \$output); sub save { my ($data, $filename) = @_; open my $fh, '>', $filename or die \"Couldn't open file for writing: \$!\"; print $fh $$data; close $fh; }"
+    },
+    {
+      "type": "processing",
+      "name": "Mapeamento de radiofrequência",
+      "input": "Observação de radiofrequência",
+      "output": "Mapa de radiofrequência",
+      "language": "Perl",
+      "code": "use strict; use warnings; use Astro::RadioFrequency; my $input = 'Observação_de_radiofrequência'; my $output = 'Mapa_de_radiofrequência'; my $radio_frequency = Astro::RadioFrequency->new(\$input); my $map = $radio_frequency->map(); save(\$map, \$output); sub save { my ($data, $filename) = @_; open my $fh, '>', $filename or die \"Couldn't open file for writing: \$!\"; print $fh $$data; close $fh; }"
+    }
+  ]
+}
